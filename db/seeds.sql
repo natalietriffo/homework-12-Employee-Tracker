@@ -20,4 +20,5 @@ VALUES ("Trevor", "Triffo", 1, NULL),
        ("Laura", "Campbell", 4, NULL),
        ("Micayla", "Paterno", 5, NULL),
        ("Grace", "Rumbaut", 6, NULL),
-       ("Thea", "Simic", 7, NULL);
+       
+       

@@ -30,7 +30,7 @@ function startList() {
             addDept()
         } else if(res.startList === "Add a role") {
             addRole()
-        } else if(res.startList === "Add a employee") {
+        } else if(res.startList === "Add an employee") {
             addEmployee()
         } else if(res.startList === "Update an employee role") {
             updateEmployee()
@@ -89,15 +89,108 @@ function addDept() {
 }
  
 function addRole() {
-    
+//specific questions for adding a role
+    var addRoleQ = [
+        {
+            type: 'input',
+            name: 'role',
+            message: 'What is the name of the role?',
+        },
+        {
+            type: 'input',
+            name: 'salRole',
+            message: 'What is the salary of the role?',
+        },
+        {
+            type: 'input',
+            name: 'deptRole',
+            message: 'Which dept ID is the role apart of?',
+        },
+    ]
+
+    inquirer.prompt(addRoleQ)
+        .then((res) => {
+            connection.query('INSERT INTO role SET ?;',
+                {
+                    title: res.role,
+                    salary: res.salRole,
+                    department_id: res.deptRole
+                },
+                function (err, result) {
+                    if (err) { console.log(err) }
+                    console.table(result)
+                    startList();
+
+                })
+        })
 }
  
 function addEmployee() {
-    
+    //specific questions for adding a employee 
+    var addEmployeeQ = [
+        {
+            type: 'input',
+            name: 'first',
+            message: "What is the employee's first name?",
+        },
+        {
+            type: 'input',
+            name: 'last',
+            message: "What is the employee's last name?",
+        },
+        {
+            type: 'input',
+            name: 'eRole',
+            message: "What is the role id for the employee?",
+        },
+        {
+            type: 'input',
+            name: 'eManager',
+            message: "What is the manager ID for the employee?",
+        },
+    ]
+
+    inquirer.prompt(addEmployeeQ)
+        .then((res) => {
+            connection.query('INSERT INTO employee SET ?;',
+                {
+                    first_name: res.first,
+                    last_name: res.last,
+                    role_id: res.eRole,
+                    manager_id: res.eManager
+                },
+                function (err, result) {
+                    if (err) { console.log(err) }
+                    console.table(result)
+                    startList();
+                })
+        })
 }
  
 function updateEmployee() {
-    
+    var updateRoleQ = [
+        {
+            type: 'input',
+            name: 'employeeID',
+            message: "Enter the Id of the employee that needs the role updated."
+        },
+        {
+            type: 'input',
+            name: 'employeeRole',
+            message: "Which role ID do you want to assign?",
+        },
+    ]
+
+    inquirer.prompt(updateRoleQ)
+        .then((res) => {
+            connection.query('UPDATE employee SET role_id = ? WHERE id = ?',
+                [res.EmployeeRole, res.employeeID],
+                function (err, result) {
+                    if (err) { console.log(err) }
+                    console.table(result)
+                    startList();
+                })
+        })
 }
  
 
